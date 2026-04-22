@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="it">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Schedly — Registrazione</title>
+    <link rel="stylesheet" href="/css/style.css" />
+</head>
+
+<body>
+<div id="title" class="page-title">Schedly</div>
+
+<div id="cd01">
+    <div class="shell">
+        <aside class="sidebar">
+            <div class="sb-brand">
+                <div class="sb-logo" aria-hidden="true">✓</div>
+                <div>Schedly</div>
+            </div>
+            <div class="tagline">Organizza<br/>il tuo tempo!</div>
+        </aside>
+
+        <main class="content">
+            <section class="panel" role="region" aria-label="register">
+                <div class="appname">
+                    <span class="appname-badge" aria-hidden="true">S</span>
+                    Schedly
+                </div>
+                <div class="subtitle">Organizza il tuo tempo!</div>
+
+                <h2>Registrati</h2>
+
+                <!-- Errore generale -->
+                <div id="regError" class="auth-error" hidden></div>
+
+                <form id="registerForm" method="post" action="/auth/register" autocomplete="on" novalidate>
+                    <div class="field">
+                        <label for="username">Nome utente</label>
+                        <div class="input">
+                            <span aria-hidden="true">👤</span>
+                            <input
+                                    id="username"
+                                    name="username"
+                                    type="text"
+                                    placeholder="Nome utente"
+                                    required
+                                    minlength="3"
+                                    maxlength="30"
+                                    autocomplete="username"
+                            />
+                        </div>
+                        <div class="field-error" id="err-username" hidden></div>
+                    </div>
+
+                    <div class="field">
+                        <label for="email">Email</label>
+                        <div class="input">
+                            <span aria-hidden="true">✉️</span>
+                            <input
+                                    id="email"
+                                    name="email"
+                                    type="email"
+                                    placeholder="Email"
+                                    required
+                                    autocomplete="email"
+                            />
+                        </div>
+                        <div class="field-error" id="err-email" hidden></div>
+                    </div>
+
+                    <div class="field">
+                        <label for="password">Password</label>
+                        <div class="input">
+                            <span aria-hidden="true">🔒</span>
+                            <input
+                                    id="password"
+                                    name="password"
+                                    type="password"
+                                    placeholder="Password"
+                                    required
+                                    minlength="8"
+                                    autocomplete="new-password"
+                            />
+                            <button
+                                    type="button"
+                                    class="pw-toggle"
+                                    data-toggle="#password"
+                                    aria-label="Mostra password"
+                                    aria-pressed="false"
+                                    title="Mostra/Nascondi password"
+                            >👁️</button>
+                        </div>
+                        <div class="hint">Minimo 8 caratteri.</div>
+                        <div class="field-error" id="err-password" hidden></div>
+                    </div>
+
+                    <div class="field">
+                        <label for="confirmPassword">Conferma password</label>
+                        <div class="input">
+                            <span aria-hidden="true">🔒</span>
+                            <input
+                                    id="confirmPassword"
+                                    name="confirmPassword"
+                                    type="password"
+                                    placeholder="Conferma password"
+                                    required
+                                    minlength="8"
+                                    autocomplete="new-password"
+                            />
+                            <button
+                                    type="button"
+                                    class="pw-toggle"
+                                    data-toggle="#confirmPassword"
+                                    aria-label="Mostra password"
+                                    aria-pressed="false"
+                                    title="Mostra/Nascondi password"
+                            >👁️</button>
+                        </div>
+                        <div class="field-error" id="err-confirm" hidden></div>
+                    </div>
+
+                    <button class="btn" type="submit">Crea account</button>
+
+                    <div class="divider"></div>
+                    <a class="link" href="/auth/login">Hai già un account? Accedi</a>
+                </form>
+            </section>
+        </main>
+    </div>
+</div>
+
+<script src="/js/app.js"></script>
+<script>
+    const regError = document.getElementById("regError");
+
+    function showGeneralError(message) {
+      regError.textContent = message;
+      regError.hidden = false;
+    }
+
+    function hideGeneralError() {
+      regError.hidden = true;
+      regError.textContent = "";
+    }
+
+    function setFieldError(id, message) {
+      const el = document.getElementById(id);
+      if (!el) return;
+      el.textContent = message;
+      el.hidden = !message;
+    }
+
+    function clearFieldErrors() {
+      setFieldError("err-username", "");
+      setFieldError("err-email", "");
+      setFieldError("err-password", "");
+      setFieldError("err-confirm", "");
+    }
+
+    const p = new URLSearchParams(location.search);
+    const e = p.get("error");
+
+    const serverMsg = {
+      missing: "Compila tutti i campi.",
+      nomatch: "Le password non coincidono.",
+      userexists: "Username già in uso.",
+      emailexists: "Email già in uso.",
+      invalidemail: "Email non valida.",
+      weakpassword: "Password troppo debole.",
+      generic: "Registrazione non riuscita. Riprova."
+    }[e];
+
+    if (serverMsg) showGeneralError(serverMsg);
+
+    document.querySelectorAll(".pw-toggle").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const sel = btn.getAttribute("data-toggle");
+        const input = document.querySelector(sel);
+        if (!input) return;
+
+        const showing = input.type === "text";
+        input.type = showing ? "password" : "text";
+        btn.setAttribute("aria-pressed", String(!showing));
+        btn.setAttribute("aria-label", showing ? "Mostra password" : "Nascondi password");
+      });
+    });
+
+    const form = document.getElementById("registerForm");
+    const username = document.getElementById("username");
+    const email = document.getElementById("email");
+    const password = document.getElementById("password");
+    const confirmPassword = document.getElementById("confirmPassword");
+
+    function isEmailValid(value) {
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+    }
+
+    function validateAll() {
+      hideGeneralError();
+      clearFieldErrors();
+
+      const u = username.value.trim();
+      const em = email.value.trim();
+      const pw = password.value;
+      const cpw = confirmPassword.value;
+
+      let ok = true;
+
+      if (u.length < 3) {
+        setFieldError("err-username", "Il nome utente deve avere almeno 3 caratteri.");
+        ok = false;
+      } else if (u.length > 30) {
+        setFieldError("err-username", "Il nome utente non può superare 30 caratteri.");
+        ok = false;
+      }
+
+      if (!em) {
+        setFieldError("err-email", "Inserisci l'email.");
+        ok = false;
+      } else if (!isEmailValid(em)) {
+        setFieldError("err-email", "Inserisci un'email valida.");
+        ok = false;
+      }
+
+      if (!pw) {
+        setFieldError("err-password", "Inserisci la password.");
+        ok = false;
+      } else if (pw.length < 8) {
+        setFieldError("err-password", "La password deve avere almeno 8 caratteri.");
+        ok = false;
+      }
+
+      if (!cpw) {
+        setFieldError("err-confirm", "Conferma la password.");
+        ok = false;
+      } else if (pw && cpw && pw !== cpw) {
+        setFieldError("err-confirm", "Le password non coincidono.");
+        ok = false;
+      }
+
+      if (!ok) {
+        showGeneralError("Controlla i campi evidenziati.");
+      }
+
+      return ok;
+    }
+
+    // valida al submit
+    form.addEventListener("submit", (ev) => {
+      if (!validateAll()) ev.preventDefault();
+    });
+
+    // valida live
+    [username, email, password, confirmPassword].forEach(inp => {
+      inp.addEventListener("input", () => {
+        validateAll();
+      });
+    });
+</script>
+</body>
+</html>

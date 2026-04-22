@@ -1,0 +1,742 @@
+{
+	"info": {
+		"_postman_id": "0c70d61d-3f86-4f77-bb15-5caf447d0df3",
+		"name": "Eventra API Testing",
+		"description": "Test delle API Usate nel progetto di Enterprise Application",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "41855546"
+	},
+	"item": [
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "Register User",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"nome\": \"Test\",\n  \"cognome\": \"User\",\n  \"email\": \"testuser@example.com\",\n  \"password\": \"Test1234!\",\n  \"numerotelefono\": \"1234567890\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/utente/register",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"utente",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Verifica che la risposta sia positiva",
+									"pm.test(\"Login riuscito\", function() {",
+									"    pm.response.to.have.status(200);",
+									"    pm.expect(pm.response.json().data.token).to.exist;",
+									"});",
+									"",
+									"// Salva il token e altri dati in variabili d'ambiente",
+									"const responseData = pm.response.json().data;",
+									"pm.environment.set(\"access_token\", responseData.token);",
+									"pm.environment.set(\"refresh_token\", responseData.refreshToken);",
+									"pm.environment.set(\"user_id\", responseData.utente);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"testuser@example.com\",\n  \"password\": \"Test1234!\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/utente/login",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"utente",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Refresh Token",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"refreshtoken\": \"{{refresh_token}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/utente/refresh",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"utente",
+								"refresh"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Autenticazione"
+		},
+		{
+			"name": "Utente",
+			"item": [
+				{
+					"name": "Get User Data",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/utente/{{user_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"utente",
+								"{{user_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Password",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"nuovaPassword\": \"NewPassword123!\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/utente/aggiornaPassword",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"utente",
+								"aggiornaPassword"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Evento",
+			"item": [
+				{
+					"name": "Create Event (Admin)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{admin_token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"nome\": \"Concerto Test\",\n  \"descrizione\": \"Descrizione concerto\",\n  \"dataOraAperturaCancelli\": \"2024-12-31T20:00:00\",\n  \"dataOraInizio\": \"2024-12-31T21:00:00\",\n  \"luogo\": \"Roma\",\n  \"organizzatoreId\": 1,\n  \"categoriaId\": 1,\n  \"strutturaId\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/evento/create",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"evento",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Events",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/evento",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"evento"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Event by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/evento/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"evento",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Filter Events by Date",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/evento/filtra?dataInizio=2024-01-01&dataFine=2024-12-31",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"evento",
+								"filtra"
+							],
+							"query": [
+								{
+									"key": "dataInizio",
+									"value": "2024-01-01"
+								},
+								{
+									"key": "dataFine",
+									"value": "2024-12-31"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Download ICS",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/evento/1/ics",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"evento",
+								"1",
+								"ics"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Ordine",
+			"item": [
+				{
+					"name": "Create Order",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Ordine creato con successo\", () => {\r",
+									"    pm.response.to.have.status(201);\r",
+									"    const ordineId = pm.response.json().id;\r",
+									"    pm.environment.set(\"ordine_id\", ordineId);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"dataOrdine\": \"2024-01-01T12:00:00\",\n  \"stato\": \"COMPLETED\",\n  \"emailProprietario\": \"user@example.com\",\n  \"prezzoTotale\": 50.00 \n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/ordine/aggiungi/{{user_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"ordine",
+								"aggiungi",
+								"{{user_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User Orders",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/ordine/utente/{{user_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"ordine",
+								"utente",
+								"{{user_id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Pagamento",
+			"item": [
+				{
+					"name": "Create Payment",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Pagamento creato con successo\", () => {\r",
+									"    pm.response.to.have.status(201);\r",
+									"    const pagamentoId = pm.response.json().id;\r",
+									"    pm.environment.set(\"pagamento_id\", pagamentoId);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"nomeTitolare\": \"Mario\",\n  \"cognomeTitolare\": \"Rossi\",\n  \"numeroCarta\": \"4242424242424242\",\n  \"scadenza\": \"12/25\",\n  \"cvv\": \"123\",\n  \"importo\": 150.50,\n  \"dataPagamento\": \"2024-05-20T15:35:00\",\n  \"stato\": \"COMPLETED\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/pagamenti/createPagamento/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"pagamenti",
+								"createPagamento",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User Payments",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/pagamenti/{{user_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"pagamenti",
+								"{{user_id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Biglietto",
+			"item": [
+				{
+					"name": "Create Ticket",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Biglietto creato con successo\", () => {\r",
+									"    pm.response.to.have.status(200);\r",
+									"    pm.expect(pm.response.json().id).to.exist;\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"nomeSpettatore\": \"Mario\",\n  \"cognomeSpettatore\": \"Rossi\",\n  \"emailSpettatore\": \"mario@example.com\",\n  \"eventoId\": 1,\n  \"tipoPostoId\": 1,\n  \"pagamentoId\": {{pagamento_id}}\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/biglietto/create",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"biglietto",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Ticket by ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/biglietto/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"biglietto",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User Tickets",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/biglietto/utente/{{user_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"biglietto",
+								"utente",
+								"{{user_id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Wishlist",
+			"item": [
+				{
+					"name": "Add Event to Wishlist",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/wishlist/1/evento/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"wishlist",
+								"1",
+								"evento",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User Wishlists",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/wishlist/utente/{{user_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"wishlist",
+								"utente",
+								"{{user_id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Admin Endpoints",
+			"item": [
+				{
+					"name": "Get All Users (Admin)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{admin_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/utente/allUtenti",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"utente",
+								"allUtenti"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete User (Admin)",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{admin_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/utente/elimina/2",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"utente",
+								"elimina",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:8080"
+		},
+		{
+			"key": "access_token",
+			"value": ""
+		},
+		{
+			"key": "refresh_token",
+			"value": ""
+		},
+		{
+			"key": "user_id",
+			"value": ""
+		},
+		{
+			"key": "admin_token",
+			"value": ""
+		}
+	]
+}

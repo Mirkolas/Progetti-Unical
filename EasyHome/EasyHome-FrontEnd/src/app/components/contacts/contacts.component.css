@@ -1,0 +1,125 @@
+h2, h3 {
+  color: #000000;
+  font-family: 'Arial', sans-serif;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+.nav-link {
+  color: #000000;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+  text-decoration: underline;
+  color: black;
+}
+
+.active-red {
+  background-color: #000000;
+  border-color: #000000;
+}
+
+.btn-primary {
+  background-color: #000000;
+  border-color: #000000;
+}
+
+.btn-primary:hover {
+  background-color: #000000;
+  border-color: #000000;
+}
+
+.btn-secondary:hover {
+  background-color: black;
+  border-color: black;
+}
+
+.bg-dark-red {
+  background-color: #000000 !important;
+}
+
+
+.border-light-red {
+  border-color: #000000 !important;
+}
+
+
+footer {
+  background-color: #000000;
+  color: #ffcccc;
+  transition: background-color 0.3s ease;
+}
+
+footer:hover {
+  background-color: #000000;
+}
+
+
+.text-pink {
+  color: #ffcccc;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+.fade-in {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.fade-in.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+img {
+  transition: transform 0.5s ease;
+}
+
+img:hover {
+  transform: scale(1.05);
+}
+
+.btn {
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+}
+
+.card {
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.card:hover {
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+  transform: translateY(-5px);
+}
+
+.input-group .form-control {
+  border-radius: 0.25rem;
+}
+
+.input-group-text {
+  background-color: black;
+  color: white;
+}
+
+input.form-control:focus, textarea.form-control:focus {
+  border-color: black;
+  box-shadow: 0 0 5px rgba(139, 0, 0, 0.3);
+}
+
+
+footer p {
+  margin: 0;
+}
+
+
+.alert-info {
+  background-color: #f0f8ff;
+  color: black;
+}

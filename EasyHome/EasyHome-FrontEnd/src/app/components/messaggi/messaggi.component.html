@@ -1,0 +1,33 @@
+<header>
+  <navbar></navbar>
+</header>
+
+<div class="messages-container">
+  <h1>Messaggi Ricevuti</h1>
+
+  <div class="message-item" *ngFor="let message of messages; let i = index">
+    <div class="message-item-header">
+      <h2>{{ message.oggetto }}</h2>
+      <p class="username">Username: {{ message.acquirente }}</p>
+      <p class="property-name">Immobile: {{ message.nomeImmobile }}</p>
+    </div>
+
+    <!-- Aggiunta della classe 'show' dinamicamente in base a 'expanded' -->
+    <div class="message-item-body" [ngClass]="{ 'show': message.expanded }">
+      <p class="description">{{ message.descrizione }}</p>
+      <p class="email">Email: {{ message.email }}</p>
+      <p class="phone">Telefono: {{ message.telefono }}</p>
+    </div>
+
+    <div class="message-item-footer">
+      <button (click)="toggleExpand(message)" class="expand-button">
+        {{ message.expanded ? 'Comprimi' : 'Espandi' }}
+      </button>
+      <button (click)="deleteMessage(message.id)" class="delete-button">Elimina</button>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <app-footer></app-footer>
+</footer>

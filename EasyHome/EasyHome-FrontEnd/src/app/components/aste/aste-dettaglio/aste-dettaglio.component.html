@@ -1,0 +1,104 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<navbar></navbar>
+
+<div class="container">
+  <div class="annuncio-card">
+    <div class="immagine-principale">
+      <img [src]="getImageSrc(asteDetails.fotoPaths[0])" alt="Immagine immobile" class="main-img">
+    </div>
+    <div class="annuncio-info">
+
+      <h2 class="titolo">{{asteDetails.nome }}</h2>
+
+      <!-- Prezzo evidenziato -->
+      <p class="prezzo">
+    <span *ngIf="asteDetails.prezzo_scontato > 0" class="text-muted text-decoration-line-through prezzo-originale">
+      €{{ asteDetails.prezzo | number:'1.0-0' }}
+    </span>
+        <span class="fw-bold text-danger prezzo-scontato">
+      €{{ (asteDetails.prezzo_scontato > 0 ? asteDetails.prezzo_scontato : asteDetails.prezzo) | number:'1.0-0' }}
+    </span>
+      </p>
+
+      <!-- Data di pubblicazione e termine asta -->
+      <p class="data-pubblicazione fw-bold text-primary">
+        Data pubblicazione: {{ asteDetails.data }}
+      </p>
+      <p class="text-danger fw-bold">
+        L'asta terminerà il: {{ calculateEndDate(asteDetails.data) }} (60 giorni dopo la pubblicazione)
+      </p>
+
+      <app-contattavenditore [venditore]="asteDetails.utente.username" [immobileId]="immobileId" [buttonText]="'Partecipa all\'asta'"></app-contattavenditore>
+
+
+      <p class="descrizione">{{ asteDetails.descrizione }}</p>
+      <ul class="dettagli">
+        <li><strong>Tipo:</strong> {{ asteDetails.tipo }}</li>
+        <li><strong>Categoria:</strong> {{ asteDetails.categoria }}</li>
+        <li><strong>Metri quadri:</strong> {{ asteDetails.mq }} m²</li>
+        <li><strong>Camere:</strong> {{ asteDetails.camere }}</li>
+        <li><strong>Bagni:</strong> {{ asteDetails.bagni }}</li>
+        <li><strong>Anno di costruzione:</strong> {{ asteDetails.anno }}</li>
+        <li><strong>Provincia:</strong> {{ asteDetails.provincia }}</li>
+      </ul>
+    </div>
+
+    <div class="venditore-info" *ngIf="asteDetails.utente">
+      <h3>Dettagli venditore</h3>
+      <p><strong>Nome:</strong> {{ asteDetails.utente.firstName || 'N/D' }}</p>
+      <p><strong>Cognome:</strong> {{ asteDetails.utente.lastName || 'N/D' }}</p>
+      <p><strong>Username:</strong> {{ asteDetails.utente.username }}</p>
+      <p><strong>Telefono:</strong> {{ asteDetails.utente.phoneNumber || 'N/D' }}</p>
+    </div>
+
+    <!-- mappa Google -->
+    <div class="mappa-container" *ngIf="latitudine && longitudine">
+      <h3>Posizione</h3>
+      <google-map height="400px" width="100%" [center]="center" [zoom]="zoom">
+        <map-marker [position]="markerPosition"></map-marker>
+      </google-map>
+    </div>
+
+    <div class="galleria">
+      <h3>Galleria Immagini</h3>
+      <div class="immagini">
+        <img *ngFor="let img of asteDetails.fotoPaths.slice(1)" [src]="getImageSrc(img)" class="galleria-img">
+      </div>
+    </div>
+  </div>
+
+  <app-recensione [venditore]="asteDetails.utente.username" [immobileId]="immobileId"></app-recensione>
+
+  <div class="recensioni-container mt-5">
+    <h3 class="text-center mb-4">Recensioni</h3>
+
+    <div *ngIf="loading" class="text-center">
+      <p>Caricamento recensioni...</p>
+    </div>
+
+    <div *ngIf="!loading && recensioni.length > 0" class="row">
+      <div *ngFor="let recensione of recensioni" class="col-lg-4 col-md-6 col-sm-12 mb-4">
+        <div class="card recensione-card shadow-lg p-3">
+          <div class="card-body">
+            <div class="rating mb-2">
+              <ng-container *ngFor="let star of getStarsArray(recensione.rating); let i = index">
+                <i class="fas fa-star text-warning"></i>
+              </ng-container>
+            </div>
+            <p class="card-text">{{ recensione.descrizione }}</p>
+            <small class="text-muted">Acquirente: {{ recensione.acquirente }}</small>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="!loading && recensioni.length === 0" class="text-center">
+      <p class="alert alert-warning">Nessuna recensione disponibile.</p>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <app-footer></app-footer>
+</footer>

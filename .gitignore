@@ -1,0 +1,27 @@
+# archivi / dump / log
+*.zip
+*.sql
+*.log
+
+# output compilati
+out/
+build/
+target/
+.gradle/
+
+# artefatti binari
+*.class
+*.jar
+*.war
+*.apk
+*.dex
+*.wav
+
+# IDE
+.idea/
+.vscode/
+*.iml
+
+# sistema
+.DS_Store
+Thumbs.db

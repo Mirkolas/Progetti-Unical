@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="it">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Schedly — Calendario</title>
+
+    <link rel="stylesheet" href="css/home.css" />
+    <link rel="stylesheet" href="css/calendario.css" />
+</head>
+
+<body>
+<div class="shell calendario-page">
+    <aside class="sidebar">
+        <div class="sb-brand">
+            <div class="sb-logo">✓</div>
+            <div>Schedly</div>
+        </div>
+
+        <nav class="nav" aria-label="menu">
+            <a href="/home"><span>🏠</span>Dashboard</a>
+            <a href="/calendario" class="active"><span>🗂️</span>Attività</a>
+            <a href="/storico"><span>🕘</span>Storico</a>
+            <a href="/preferenze"><span>⚙️</span>Preferenze</a>
+        </nav>
+    </aside>
+
+    <main class="content">
+        <section class="board" aria-label="calendario settimanale">
+                <div class="toolbar">
+                    <div class="left-tools">
+                        <div class="chip">
+                            <span>Piano:</span>
+                            <select id="pianoSelect">
+                                <option value="">Caricamento...</option>
+                            </select>
+                            <button id="deletePianoBtn" class="icon-btn" title="Elimina questo piano" style="display: none; margin-left: 8px; background: none; border: none; cursor: pointer; color: #ef4444;">
+                                🗑️
+                            </button>
+                        </div>
+                        <div class="chip">
+                            <span>Filtro:</span>
+                            <select id="filter">
+                                <option value="all" selected>Tutto</option>
+                                <option value="alta">Alta priorità</option>
+                                <option value="media">Media priorità</option>
+                                <option value="bassa">Bassa priorità</option>
+                            </select>
+                        </div>
+                        <div class="chip">
+                            <span>Esporta:</span>
+                            <div class="export-buttons">
+                                <button id="exportPDF" class="btn-icon-small" title="Esporta in PDF">📄 PDF</button>
+                                <button id="exportExcel" class="btn-icon-small" title="Esporta in Excel">📊 Excel</button>
+                                <button id="exportCSV" class="btn-icon-small" title="Esporta in CSV">📝 CSV</button>
+                            </div>
+                        </div>
+                    </div>
+
+                <div class="nav-week">
+                    <button class="btn-icon" id="prevWeek" type="button">‹</button>
+                    <span id="weekLabel">Lun 22 Apr - Ven 26 Apr</span>
+                    <button class="btn-icon" id="nextWeek" type="button">›</button>
+                    <button class="btn-icon" id="addEvent" type="button" title="Aggiungi evento">+</button>
+                </div>
+            </div>
+
+            <div class="calendar-container">
+                <div class="calendar-grid">
+                    <div class="calendar-header"></div>
+                    <div class="calendar-day-header">Lun</div>
+                    <div class="calendar-day-header">Mar</div>
+                    <div class="calendar-day-header">Mer</div>
+                    <div class="calendar-day-header">Gio</div>
+                    <div class="calendar-day-header">Ven</div>
+
+                    <div class="calendar-time">08:00</div>
+                    <div class="calendar-cell" data-day="mon" data-time="08:00"></div>
+                    <div class="calendar-cell" data-day="tue" data-time="08:00"></div>
+                    <div class="calendar-cell" data-day="wed" data-time="08:00"></div>
+                    <div class="calendar-cell" data-day="thu" data-time="08:00"></div>
+                    <div class="calendar-cell" data-day="fri" data-time="08:00"></div>
+
+                    <div class="calendar-time">09:00</div>
+                    <div class="calendar-cell" data-day="mon" data-time="09:00"></div>
+                    <div class="calendar-cell" data-day="tue" data-time="09:00"></div>
+                    <div class="calendar-cell" data-day="wed" data-time="09:00"></div>
+                    <div class="calendar-cell" data-day="thu" data-time="09:00"></div>
+                    <div class="calendar-cell" data-day="fri" data-time="09:00"></div>
+
+                    <div class="calendar-time">10:00</div>
+                    <div class="calendar-cell" data-day="mon" data-time="10:00"></div>
+                    <div class="calendar-cell" data-day="tue" data-time="10:00"></div>
+                    <div class="calendar-cell" data-day="wed" data-time="10:00"></div>
+                    <div class="calendar-cell" data-day="thu" data-time="10:00"></div>
+                    <div class="calendar-cell" data-day="fri" data-time="10:00"></div>
+
+                    <div class="calendar-time">11:00</div>
+                    <div class="calendar-cell" data-day="mon" data-time="11:00"></div>
+                    <div class="calendar-cell" data-day="tue" data-time="11:00"></div>
+                    <div class="calendar-cell" data-day="wed" data-time="11:00"></div>
+                    <div class="calendar-cell" data-day="thu" data-time="11:00"></div>
+                    <div class="calendar-cell" data-day="fri" data-time="11:00"></div>
+
+                    <div class="calendar-time">12:00</div>
+                    <div class="calendar-cell" data-day="mon" data-time="12:00"></div>
+                    <div class="calendar-cell" data-day="tue" data-time="12:00"></div>
+                    <div class="calendar-cell" data-day="wed" data-time="12:00"></div>
+                    <div class="calendar-cell" data-day="thu" data-time="12:00"></div>
+                    <div class="calendar-cell" data-day="fri" data-time="12:00"></div>
+
+                    <div class="calendar-time">13:00</div>
+                    <div class="calendar-cell" data-day="mon" data-time="13:00"></div>
+                    <div class="calendar-cell" data-day="tue" data-time="13:00"></div>
+                    <div class="calendar-cell" data-day="wed" data-time="13:00"></div>
+                    <div class="calendar-cell" data-day="thu" data-time="13:00"></div>
+                    <div class="calendar-cell" data-day="fri" data-time="13:00"></div>
+
+                    <div class="calendar-time">14:00</div>
+                    <div class="calendar-cell" data-day="mon" data-time="14:00"></div>
+                    <div class="calendar-cell" data-day="tue" data-time="14:00"></div>
+                    <div class="calendar-cell" data-day="wed" data-time="14:00"></div>
+                    <div class="calendar-cell" data-day="thu" data-time="14:00"></div>
+                    <div class="calendar-cell" data-day="fri" data-time="14:00"></div>
+
+                    <div class="calendar-time">15:00</div>
+                    <div class="calendar-cell" data-day="mon" data-time="15:00"></div>
+                    <div class="calendar-cell" data-day="tue" data-time="15:00"></div>
+                    <div class="calendar-cell" data-day="wed" data-time="15:00"></div>
+                    <div class="calendar-cell" data-day="thu" data-time="15:00"></div>
+                    <div class="calendar-cell" data-day="fri" data-time="15:00"></div>
+
+                    <div class="calendar-time">16:00</div>
+                    <div class="calendar-cell" data-day="mon" data-time="16:00"></div>
+                    <div class="calendar-cell" data-day="tue" data-time="16:00"></div>
+                    <div class="calendar-cell" data-day="wed" data-time="16:00"></div>
+                    <div class="calendar-cell" data-day="thu" data-time="16:00"></div>
+                    <div class="calendar-cell" data-day="fri" data-time="16:00"></div>
+
+                    <div class="calendar-time">17:00</div>
+                    <div class="calendar-cell" data-day="mon" data-time="17:00"></div>
+                    <div class="calendar-cell" data-day="tue" data-time="17:00"></div>
+                    <div class="calendar-cell" data-day="wed" data-time="17:00"></div>
+                    <div class="calendar-cell" data-day="thu" data-time="17:00"></div>
+                    <div class="calendar-cell" data-day="fri" data-time="17:00"></div>
+
+                    <div class="calendar-time">18:00</div>
+                    <div class="calendar-cell" data-day="mon" data-time="18:00"></div>
+                    <div class="calendar-cell" data-day="tue" data-time="18:00"></div>
+                    <div class="calendar-cell" data-day="wed" data-time="18:00"></div>
+                    <div class="calendar-cell" data-day="thu" data-time="18:00"></div>
+                    <div class="calendar-cell" data-day="fri" data-time="18:00"></div>
+                </div>
+            </div>
+        </section>
+    </main>
+</div>
+
+<script src="js/app.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.23/jspdf.plugin.autotable.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script src="js/calendario.js"></script>
+</body>
+</html>

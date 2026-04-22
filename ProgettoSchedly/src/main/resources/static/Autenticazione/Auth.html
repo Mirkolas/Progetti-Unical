@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="it">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Schedly — CD01</title>
+    <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+
+<div id="title" class="page-title">Schedly</div>
+
+<div id="cd01">
+    <div class="shell">
+        <aside class="sidebar">
+            <div class="sb-brand">
+                <div class="sb-logo" aria-hidden="true">✓</div>
+                <div>Schedly</div>
+            </div>
+            <div class="tagline">Organizza<br/>il tuo tempo!</div>
+        </aside>
+
+        <main class="content">
+
+            <section class="panel" role="region" aria-label="login">
+                <div class="appname">
+                    <span class="appname-badge" aria-hidden="true">S</span>
+                    Schedly
+                </div>
+                <div class="subtitle">Organizza il tuo tempo!</div>
+
+                <h2>Accedi</h2>
+
+                <form method="post" action="/auth/login" novalidate>
+                    <div class="field">
+                        <label for="username">Nome utente</label>
+                        <div class="input">
+                            <span aria-hidden="true">👤</span>
+                            <input
+                                    id="username"
+                                    name="username"
+                                    type="text"
+                                    placeholder="Nome utente"
+                                    autocomplete="username"
+                                    required
+                            />
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label for="password">Password</label>
+                        <div class="input">
+                            <span aria-hidden="true">🔒</span>
+                            <input
+                                    id="password"
+                                    name="password"
+                                    type="password"
+                                    placeholder="Password"
+                                    autocomplete="current-password"
+                                    required
+                            />
+                            <button
+                                    type="button"
+                                    class="pw-toggle"
+                                    id="pwToggle"
+                                    aria-label="Mostra password"
+                                    aria-pressed="false"
+                                    title="Mostra/Nascondi password"
+                            >
+                                👁️
+                            </button>
+                        </div>
+                    </div>
+
+                    <button class="btn" type="submit">Accedi</button>
+
+                    <div class="divider"></div>
+
+                    <a class="link" href="/auth/register">Non hai un account? Registrati</a>
+
+                    <div id="authError" class="auth-error" hidden>
+                        Credenziali non valide.
+                    </div>
+                </form>
+
+            </section>
+        </main>
+    </div>
+</div>
+
+<script src="/js/app.js"></script>
+<script>
+    const p = new URLSearchParams(location.search);
+    const authError = document.getElementById("authError");
+    if (p.get("error") === "1" && authError) {
+      authError.hidden = false;
+    }
+
+    const pw = document.getElementById("password");
+    const btn = document.getElementById("pwToggle");
+    if (pw && btn) {
+      btn.addEventListener("click", () => {
+        const showing = pw.type === "text";
+        pw.type = showing ? "password" : "text";
+        btn.setAttribute("aria-pressed", String(!showing));
+        btn.setAttribute("aria-label", showing ? "Mostra password" : "Nascondi password");
+      });
+    }
+</script>
+
+</body>
+</html>

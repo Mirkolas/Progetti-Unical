@@ -1,0 +1,4 @@
+package application;
+
+
+public enum Stato {MENU, MAPPE, CAMBIA_SKIN, INFO, VITTORIA, GAME_OVER, PAUSA, IN_GIOCO,HELP,FUOCO, ACQUA}

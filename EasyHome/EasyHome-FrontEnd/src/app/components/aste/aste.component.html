@@ -1,0 +1,48 @@
+<header>
+  <navbar></navbar>
+</header>
+
+<div class="container mt-5">
+  <h2 class="text-center mb-4">🔨 Aste Immobiliari</h2>
+
+  <div *ngIf="aste.length === 0" class="alert alert-warning text-center">
+    Nessuna asta disponibile. Prova a tornare più tardi.
+  </div>
+
+  <div class="row justify-content-center">
+    <div class="col-lg-4 col-md-6 col-sm-12 mb-4" *ngFor="let asta of aste">
+      <div class="card shadow-lg h-100">
+
+        <div class="galleria">
+          <img class="galleria-img" [src]="getImageSrc(asta.immagine)" alt="Immagine asta" (error)="onImageError($event)">
+        </div>
+
+        <div class="card-body d-flex flex-column">
+          <h5 class="card-title">{{ asta.nome }}</h5>
+          <p class="card-text">
+            <span *ngIf="asta.prezzo_scontato > 0" class="text-muted text-decoration-line-through">
+              €{{ asta.prezzo | number:'1.0-0' }}
+            </span>
+            <span class="fw-bold ms-2">
+              €{{ (asta.prezzo_scontato > 0 ? asta.prezzo_scontato : asta.prezzo) | number:'1.0-0' }}
+            </span>
+          </p>
+
+          <ul class="dettagli-asta">
+            <li><strong>Tipo:</strong> {{ asta.tipo }}</li>
+            <li><strong>Categoria:</strong> {{ asta.categoria }}</li>
+            <li><strong>Superficie:</strong> {{ asta.mq }} m²</li>
+          </ul>
+
+          <div class="mt-auto text-center">
+            <a [routerLink]="['/aste-dettaglio', asta.id]" class="btn btn-primary">Dettagli</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer class="footer mt-5">
+  <app-footer></app-footer>
+</footer>

@@ -1,0 +1,15 @@
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>404 - Pagina non trovata</title>
+</head>
+<body>
+<div class="container">
+  <div class="error-box">
+    <h1>{{ errorCode }}</h1>
+    <p *ngIf="errorCode === 404">La pagina che stai cercando non esiste.</p>
+    <p *ngIf="errorCode === 403">Non hai il permesso per visualizzare questa pagina.</p>
+    <a href="/" class="home-button">Torna alla home</a>
+  </div>
+</div>
+</body>

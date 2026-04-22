@@ -1,0 +1,132 @@
+
+<ng-template #immobiliTemplate let-dialogRef="dialogRef">
+  <div class="dialog-container">
+    <h2>Seleziona Tipo</h2>
+    <ul class="options-list">
+      <li *ngFor="let option of ['Tutti', 'Casa', 'Appartamento', 'Villa']"
+          class="option-item"
+          (click)="selectOption(dialogRef, option)">
+        {{ option }}
+      </li>
+    </ul>
+  </div>
+</ng-template>
+
+<ng-template #annuncioTemplate let-dialogRef="dialogRef">
+  <div class="dialog-container">
+    <h2>Seleziona Categoria</h2>
+    <ul class="options-list">
+      <li *ngFor="let option of ['Tutti', 'Affitto', 'Vendita']"
+          class="option-item"
+          (click)="selectOption(dialogRef, option)">
+        {{ option }}
+      </li>
+    </ul>
+  </div>
+</ng-template>
+<ng-template #luogoTemplate let-dialogRef="dialogRef">
+  <div class="dialog-map-container">
+    <div class="dialog-container-luogo">
+
+      <ul class="options-list">
+        <ng-container *ngFor="let city of places; let i = index">
+          <!-- Apre una riga ogni due elementi -->
+          <div class="options-row" *ngIf="i % 2 === 0">
+            <li *ngIf="places[i]"
+                class="option-item"
+                (click)="selectLuogo(places[i].name, places[i].coordinates, places[i].zoom)"
+                [class.selected]="selectedLuogoTemp === places[i].name">
+              {{ places[i].name }}
+            </li>
+            <li *ngIf="places[i + 1]"
+                class="option-item"
+                (click)="selectLuogo(places[i + 1].name, places[i + 1].coordinates, places[i + 1].zoom)"
+                [class.selected]="selectedLuogoTemp === places[i + 1].name">
+              {{ places[i + 1].name }}
+            </li>
+          </div>
+        </ng-container>
+      </ul>
+
+      <div class="map-container">
+        <google-map [center]="center" [zoom]="zoom">
+          <map-marker *ngFor="let marker of filteredMarkers"
+                      [position]="marker.coordinates">
+          </map-marker>
+        </google-map>
+      </div>
+
+      <button class="bottone mt-2" (click)="confirmSelection(dialogRef)">Conferma</button>
+
+    </div>
+  </div>
+</ng-template>
+
+<header>
+  <navbar></navbar>
+</header>
+
+<main>
+  <section class="hero">
+    <img class="logo" src="assets/logo.png">
+    <section class="search-section">
+      <form action="/search" method="get">
+        <div class="filters">
+          <div class="search-line">
+            <p>Cerco</p>
+            <div class="filter">
+              <button type="button" mat-button (click)="openSelectDialog(immobiliTemplate, 'selectedImmobili')">
+                {{ selectedImmobili || 'Tipo Immobile' }}
+              </button>
+            </div>
+            <p>in</p>
+            <div class="filter">
+              <button type="button" mat-button (click)="openSelectDialog(annuncioTemplate, 'selectedAffittoVendita')">
+                {{ selectedAffittoVendita || 'Tipo Annuncio' }}
+              </button>
+            </div>
+          </div>
+
+          <div class="search-line">
+            <p>a</p>
+            <div class="filter">
+              <button type="button" mat-button (click)="openMap(luogoTemplate, 'selectedLuogo')">
+                {{ selectedLuogo || 'Seleziona Luogo' }}
+              </button>
+            </div>
+
+          </div>
+          <button
+            [class.attivo]="isSelectionComplete()"
+            [class.inattivo]="!isSelectionComplete()"
+            [disabled]="!isSelectionComplete()"   (click)="seeResults()" class="ricerca">Vedi risultati</button>
+        </div>
+      </form>
+    </section>
+  </section>
+
+  <section class="featured-properties">
+    <h2>EasyHome - è più facile con noi</h2>
+    <div class="properties-container">
+      <figure>
+        <img src="/assets/dream-house.png" alt="Appartamento moderno a Milano">
+        <figcaption>Trova la casa dei tuoi sogni</figcaption>
+      </figure>
+      <figure>
+        <img src="/assets/mappa.png" alt="Visualizza Mappe Interattive">
+        <figcaption>Visualizza mappe interattive</figcaption>
+      </figure>
+      <figure>
+        <img src="/assets/customers.png" alt="Vicine a te">
+        <figcaption>Vicine a te</figcaption>
+      </figure>
+      <figure>
+        <img src="/assets/agent.png" alt="Non siamo una semplice agenzia">
+        <figcaption>Non siamo una semplice agenzia</figcaption>
+      </figure>
+    </div>
+  </section>
+</main>
+<footer>
+  <app-footer></app-footer>
+</footer>

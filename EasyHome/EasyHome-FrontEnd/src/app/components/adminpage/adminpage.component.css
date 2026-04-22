@@ -1,0 +1,149 @@
+
+.background {
+  position: relative;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #333333, #444444);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  overflow: hidden;
+}
+
+button {
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 15px;
+  cursor: pointer;
+  font-size: 14px;
+  float: right;
+  margin-top: -15px;
+}
+
+.home-btn {
+  background-color: gray;
+}
+
+.home-btn:hover {
+  background-color: darkgray;
+}
+
+.logout-btn {
+  background-color: #ff4d4d;
+}
+
+.logout-btn:hover {
+  background-color: #ff1a1a;
+}
+
+.blur-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(15px);
+}
+
+.container {
+  z-index: 1;
+  background-color: #2c2c2c;
+  border-radius: 12px;
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+  padding: 30px;
+  width: 100%;
+  max-width: 700px;
+  box-sizing: border-box;
+}
+
+.header h2 {
+  font-family: 'Roboto', sans-serif;
+  font-size: 2.2rem;
+  text-align: center;
+  color: #fff;
+}
+
+.horizontalrow, .horizontalrow2 {
+  border: 0;
+  height: 1px;
+  background-color: #666666;
+  margin: 20px 0;
+}
+
+.changeUserTypeSection, .banUserSection {
+  margin: 30px 0;
+}
+
+.changeUserTypeSection h3, .banUserSection h3 {
+  text-align: center;
+  font-size: 1.8rem;
+  color: #ddd;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+input, select {
+  width: 100%;
+  padding: 14px;
+  margin: 10px 0;
+  border-radius: 8px;
+  border: 1px solid #555555;
+  font-size: 1.1rem;
+  background-color: #444444;
+  color: #fff;
+  box-sizing: border-box;
+}
+
+.username {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(5px);
+  transition: background 0.3s ease, color 0.3s ease;
+}
+.user-actions {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+.username:hover {
+  background: rgba(255, 255, 255, 0.4);
+  color: #000;
+}
+
+.submit-btn {
+  background-color: #0027ea;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  padding: 12px;
+  font-size: 1.1rem;
+  border-radius: 8px;
+  margin-top: 15px;
+  width: 100%;
+}
+
+.submit-btn:hover {
+  background-color: #3700b3;
+}
+
+.changeUserTypeContainer, .banUserContainer {
+  padding: 15px;
+  background-color: #333333;
+  border-radius: 10px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+}
+
+
+

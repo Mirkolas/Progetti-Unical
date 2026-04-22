@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="it">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Schedly — CD02</title>
+
+    <link rel="stylesheet" href="css/home.css" />
+</head>
+
+<body>
+<div class="shell">
+    <aside class="sidebar">
+        <div class="sb-brand">
+            <div class="sb-logo">✓</div>
+            <div>Schedly</div>
+        </div>
+
+        <nav class="nav" aria-label="menu">
+            <a href="/home"><span>🏠</span>Dashboard</a>
+            <a href="/calendario"><span>🗂️</span>Attività</a>
+            <a href="/storico"><span>🕘</span>Storico</a>
+            <a href="/preferenze"><span>⚙️</span>Preferenze</a>
+        </nav>
+    </aside>
+
+    <main class="content">
+        <div class="toast" id="toast-cd02" style="display:none;">
+            <div class="dot"></div>
+            <div><strong>Pianificazione generata!</strong></div>
+            <div class="close" data-close="#toast-cd02">×</div>
+        </div>
+
+        <section class="board" aria-label="generazione pianificazione">
+            <div class="toolbar">
+                <div class="left-tools">
+                    <div class="chip">🧠 Generazione automatica</div>
+                    <div class="chip">
+                        <span>Piano:</span>
+                        <select id="pianoSelect">
+                            <option value="">Caricamento...</option>
+                        </select>
+                    </div>
+                    <div class="chip">
+                        <span>Modalità:</span>
+                        <select id="mode">
+                            <option selected>Settimana</option>
+                            <option>Mese (demo)</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="cd02-layout">
+                <!-- Left: prompt + preferences -->
+                <div class="card">
+                    <h3>Inserisci attività (prompt a lista)</h3>
+                    <div class="hint">
+                        Scrivi una lista con un’attività per riga iniziando con <strong>-</strong>.<br/>
+                        Esempio:<br/>
+                        <span class="mono">
+                - Studiare matematica<br/>- Appuntamento banca
+              </span>
+                    </div>
+
+                    <textarea id="prompt" class="prompt">- Studiare matematica
+- Appuntamento banca
+- Allenamento
+- Ripasso informatica
+- Spesa</textarea>
+
+                    <div class="kv">
+                        <label>Priorità default</label>
+                        <select id="prio">
+                            <option>Bassa</option>
+                            <option selected>Media</option>
+                            <option>Alta</option>
+                        </select>
+                    </div>
+
+                    <div class="spacer-10"></div>
+                    <h3>Vincoli e preferenze</h3>
+
+                    <div class="grid2">
+                        <div class="kv">
+                            <label>Fasce disponibili</label>
+                            <select id="slots">
+                                <option value="morning">Solo Mattina (09:00, 10:00, 11:00)</option>
+                                <option value="afternoon">Solo Pomeriggio (14:00, 15:00, 16:00)</option>
+                                <option value="both" selected>Mattina + Pomeriggio</option>
+                            </select>
+                        </div>
+
+                        <div class="kv">
+                            <label>Limite attività per giorno</label>
+                            <input id="maxPerDay" type="number" min="1" max="6" value="2" />
+                        </div>
+                    </div>
+
+                    <div class="kv mt-10">
+                        <label>Giorni disponibili</label>
+                        <div class="checks">
+                            <div class="check"><input id="d-mon" type="checkbox" checked /><label for="d-mon">Lun</label></div>
+                            <div class="check"><input id="d-tue" type="checkbox" checked /><label for="d-tue">Mar</label></div>
+                            <div class="check"><input id="d-wed" type="checkbox" checked /><label for="d-wed">Mer</label></div>
+                            <div class="check"><input id="d-thu" type="checkbox" checked /><label for="d-thu">Gio</label></div>
+                            <div class="check"><input id="d-fri" type="checkbox" checked /><label for="d-fri">Ven</label></div>
+                        </div>
+                    </div>
+
+                    <div class="mini-actions">
+                        <button class="btn secondary" id="clearPlan" type="button">Svuota calendario</button>
+                        <button class="btn" id="generatePlan" type="button">Genera pianificazione</button>
+                    </div>
+
+                    <div class="legend">
+                        <div class="pill"><span class="dot"></span>Attività</div>
+                        <div class="pill"><span class="dot blue"></span>Attività (variante)</div>
+                        <div class="pill"><span class="dot green"></span>Completata (demo)</div>
+                        <div class="pill"><span class="dot red"></span>Urgente (demo)</div>
+                    </div>
+                </div>
+
+                <!-- Right: Daily checklist -->
+                <div class="card card-tight">
+                    <div class="toolbar toolbar-inside">
+                        <div class="left-tools">
+                            <div class="chip">✅ Oggi</div>
+                            <div class="chip">
+                                <span>Giorno:</span>
+                                <select id="dayPick">
+                                    <option value="mon" selected>Lunedì</option>
+                                    <option value="tue">Martedì</option>
+                                    <option value="wed">Mercoledì</option>
+                                    <option value="thu">Giovedì</option>
+                                    <option value="fri">Venerdì</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="nav-week">
+                            <button class="btn-icon" id="prevDay" type="button">‹</button>
+                            <span id="dayLabel">Lun 22 Apr</span>
+                            <button class="btn-icon" id="nextDay" type="button">›</button>
+                        </div>
+                    </div>
+
+                    <div class="pad-16">
+                        <div class="stats-row">
+                            <div class="chip">📌 Da fare: <span id="todoCount" class="num">0</span></div>
+                            <div class="chip">🎉 Completate: <span id="doneCount" class="num">0</span></div>
+                        </div>
+
+                        <div class="card flat soft">
+                            <h3 class="h3-sm">Da completare</h3>
+                            <div id="todoList" class="list-grid"></div>
+                        </div>
+
+                        <div class="spacer-12"></div>
+
+                        <div class="card flat">
+                            <h3 class="h3-sm">Completate</h3>
+                            <div id="doneList" class="list-grid"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+</div>
+
+<script src="js/app.js"></script>
+<script src="js/home.js"></script>
+</body>
+</html>

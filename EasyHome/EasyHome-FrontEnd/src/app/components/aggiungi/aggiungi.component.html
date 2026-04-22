@@ -1,0 +1,142 @@
+<main>
+
+
+  <header>
+    <navbar></navbar>
+  </header>
+
+  <div class="wizard-container">
+
+    <div *ngIf="passoAttuale === 1" class="step">
+      <h2 class="step-title">Passo 1: Dettagli dell'annuncio</h2>
+      <form [formGroup]="form">
+
+        <div class="form-field">
+          <label for="nome">Nome</label>
+          <input id="nome" formControlName="nome" type="text" placeholder="Nome dell'annuncio">
+        </div>
+
+        <div class="form-field">
+          <label for="tipo">Tipo di Immobile</label>
+          <select id="tipo" formControlName="tipo">
+            <option value="Casa">Casa</option>
+            <option value="Appartamento">Appartamento</option>
+            <option value="Villa">Villa</option>
+          </select>
+        </div>
+
+        <div class="form-field">
+          <label for="descrizione">Descrizione</label>
+          <textarea id="descrizione" formControlName="descrizione" placeholder="Descrizione dell'annuncio"></textarea>
+        </div>
+
+        <div class="form-field">
+          <label for="categoria">Tipo di Annuncio</label>
+          <select id="categoria" formControlName="categoria">
+            <option value="Vendita">Vendita</option>
+            <option value="Affitto">Affitto</option>
+            <option value="Aste">Aste</option>
+          </select>
+        </div>
+
+        <button type="button" class="next-button" (click)="passaPasso()">Next</button>
+      </form>
+    </div>
+
+    <div *ngIf="passoAttuale === 2" class="step">
+      <h2 class="step-title">Passo 2: Dettagli finanziari e struttura</h2>
+      <form [formGroup]="form">
+        <div class="form-field">
+          <label for="prezzo">Prezzo</label>
+          <input id="prezzo" formControlName="prezzo" type="number" placeholder="Prezzo dell'immobile">
+        </div>
+        <div class="form-field">
+          <label for="mq">Metri Quadri</label>
+          <input id="mq" formControlName="mq" type="number" placeholder="Metri quadri dell'immobile">
+        </div>
+        <div class="form-field">
+          <label for="anno">Anno di costruzione</label>
+          <input id="anno" formControlName="anno" type="number" placeholder="Anno di costruzione">
+        </div>
+        <div class="form-field">
+          <label for="camere">Camere</label>
+          <input id="camere" formControlName="camere" type="number" placeholder="Numero di camere">
+        </div>
+        <div class="form-field">
+          <label for="bagni">Bagni</label>
+          <input id="bagni" formControlName="bagni" type="number" placeholder="Numero di bagni">
+        </div>
+
+        <div class="button-group">
+          <button type="button" class="prev-button" (click)="tornaPasso()">Back</button>
+          <button type="button" class="next-button" (click)="passaPasso()">Next</button>
+        </div>
+      </form>
+    </div>
+
+    <div *ngIf="passoAttuale === 3" class="step">
+      <h2 class="step-title">Passo 3: Posizione e Conferma</h2>
+
+      <form [formGroup]="form">
+        <!-- Upload Immagini -->
+        <div class="form-field">
+          <label for="foto">Foto
+            <span class="warning-text">Attenzione: la prima immagine caricata sarà quella predefinita</span>
+
+          </label>
+
+          <input id="foto" type="file" (change)="onFileChange($event)" multiple accept="image/*">
+          <span class="warning-text">Ricorda: I file caricati devono essere in formato .png</span>
+          <!-- Anteprima delle immagini -->
+          <div *ngIf="anteprimaImmagini.length > 0" class="preview-images">
+            <div *ngFor="let file of anteprimaImmagini; let i = index" class="preview-container">
+              <button type="button" class="remove-button" (click)="rimuoviFoto(i)">X</button>
+              <img [src]="file" alt="Anteprima immagine" class="preview-img">
+            </div>
+          </div>
+        </div>
+
+
+          <div class="form-field">
+          <label for="provincia">Provincia</label>
+          <div>
+            <input id="provincia" formControlName="provincia" type="text" placeholder="Provincia">
+          </div>
+        </div>
+
+        <div class="form-field">
+          <label for="indirizzo">Indirizzo (Es. Via dei Giardini 186, Marina di Gioiosa)</label>
+          <div>
+            <input id="indirizzo" formControlName="indirizzo" type="text" placeholder="Indirizzo" >
+            <button type="button" (click)="verificaIndirizzo(form.get('indirizzo')?.value)" >Verifica Indirizzo</button>
+          </div>
+        </div>
+
+        <div *ngIf="latitudine && longitudine" class="google-map-container">
+          <google-map
+            height="400px"
+            width="100%"
+            [center]="center"
+            [zoom]="zoom"
+          >
+            <map-marker
+              [position]="markerPosition">
+            </map-marker>
+          </google-map>
+        </div>
+
+
+
+
+        <div class="button-group">
+          <button type="button" class="prev-button" (click)="tornaPasso()">Back</button>
+          <button type="button" class="submit-button" (click)="aggiungiAnnuncio()">Aggiungi Annuncio</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <footer>
+    <app-footer></app-footer>
+  </footer>
+</main>

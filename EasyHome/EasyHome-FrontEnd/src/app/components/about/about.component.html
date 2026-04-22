@@ -1,0 +1,106 @@
+<header>
+  <navbar></navbar>
+</header>
+
+<section class="about-us">
+  <div class="about-container fade-in">
+    <div class="about-content">
+      <h2>Chi Siamo</h2>
+      <p>
+        Siamo EasyHome, una piattaforma innovativa che ti aiuta a trovare la casa perfetta. La nostra missione è semplificare la ricerca immobiliare, mettendo a disposizione strumenti avanzati e una vasta selezione di annunci. Con EasyHome, non è solo una questione di trovare una casa, ma di trovare il posto che ti farà sentire a casa.
+      </p>
+      <a href="/about" class="cta-button">Leggi di più</a>
+    </div>
+
+    <div class="about-image">
+      <img ngSrc="assets/brainstorm.png" alt="Il nostro team" height="512" width="512" />
+    </div>
+  </div>
+
+  <div class="mission-vision fade-in">
+    <h2>La nostra Missione</h2>
+    <p>
+      La nostra missione è rendere la ricerca della casa un'esperienza semplice e piacevole. Offriamo una piattaforma user-friendly con un ampio ventaglio di opzioni, cercando sempre di semplificare il processo decisionale per chi cerca una casa e chi la offre.
+    </p>
+
+    <h2>La nostra Visione</h2>
+    <p>
+      Vogliamo diventare il punto di riferimento per chi cerca la casa dei suoi sogni, creando una rete di professionisti e clienti che si aiutano a vicenda per trovare la soluzione ideale.
+    </p>
+  </div>
+
+  <div class="team fade-in">
+    <h2>Il Nostro Team</h2>
+    <div class="team-container">
+      <div class="team-member">
+        <img src="assets/Mirko.png" alt="Team Member 1" />
+        <h3>Mirko Sonotaca</h3>
+        <p>CEO e Fondatore</p>
+        <p>Mirko ha fondato EasyHome con l'idea di rendere la ricerca della casa un processo più facile e veloce.</p>
+      </div>
+      <div class="team-member">
+        <img src="assets/Simone.jpg" alt="Team Member 2" />
+        <h3>Simone Cozza</h3>
+        <p>Responsabile Marketing</p>
+        <p>Simone si occupa della strategia di marketing e della crescita della nostra piattaforma a livello nazionale.</p>
+      </div>
+      <div class="team-member">
+        <img src="assets/Giuseppe.jpg" alt="Team Member 3" />
+        <h3>Giuseppe Rudi</h3>
+        <p>Lead Developer</p>
+        <p>Giuseppe è il nostro genio della programmazione e guida il team di sviluppo della piattaforma.</p>
+      </div>
+      <div class="team-member">
+        <img src="assets/Francesco.jpeg" alt="Team Member 4" />
+        <h3>Francesco Cristiano</h3>
+        <p>Lead Developer</p>
+        <p>Francesco è il nostro Bug Solver e guida il team di sviluppo della piattaforma.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="testimonials fade-in">
+    <h2>Cosa Dicono i Nostri Clienti</h2>
+    <div class="testimonial">
+      <p>"EasyHome mi ha aiutato a trovare la casa dei miei sogni in pochi giorni. Il servizio è stato veloce e preciso. Consiglio vivamente!"</p>
+      <h4>Kristian Reale</h4>
+    </div>
+    <div class="testimonial">
+      <p>"La ricerca della casa è diventata molto più semplice grazie a EasyHome. Ottima piattaforma!"</p>
+      <h4>Marco Forte</h4>
+    </div>
+  </div>
+
+  <div class="history fade-in">
+    <h2>La Nostra Storia</h2>
+    <p>
+      EasyHome è nata nel 2015 con l'intento di rivoluzionare il settore immobiliare online. Partiti come una piccola startup, oggi siamo una piattaforma leader che aiuta migliaia di persone ogni giorno a trovare la casa perfetta.
+    </p>
+  </div>
+
+  <div class="location-container fade-in">
+    <div class="details">
+      <div class="details-card">
+        <h3>La nostra sede</h3>
+        <p>Vieni a trovarci nella nostra sede principale:</p>
+        <address>
+          <strong>EasyHome Sede Centrale</strong><br />
+          Via Roma, 123<br />
+          87100 Cosenza, Italia<br />
+          Telefono: +39 0984 123456<br />
+          Email: info&#64;easyhome.com
+        </address>
+      </div>
+    </div>
+
+    <div class="map-card">
+      <google-map [center]="center" [zoom]="zoom">
+        <map-marker [position]="markerPosition"></map-marker>
+      </google-map>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <app-footer></app-footer>
+</footer>

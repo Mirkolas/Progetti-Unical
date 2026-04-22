@@ -1,0 +1,87 @@
+<navbar></navbar>
+
+<div class="container mt-5">
+  <h2 class="text-center mb-4">Modifica Immobile</h2>
+
+  <form [formGroup]="modificaForm" (ngSubmit)="modificaAnnuncio()">
+    <div>
+      <label for="nome">Nome</label>
+      <input id="nome" formControlName="nome" />
+    </div>
+
+    <div>
+      <label for="tipo">Tipo</label>
+      <input id="tipo" formControlName="tipo" />
+    </div>
+
+    <div>
+      <label for="descrizione">Descrizione</label>
+      <textarea id="descrizione" formControlName="descrizione"></textarea>
+    </div>
+
+    <div>
+      <span> Prezzo Attuale: {{ immobileDetails.prezzoVisualizzato | currency: 'EUR' }}</span>
+      <label for="prezzo">Nuovo Prezzo</label>
+      <input id="prezzo" formControlName="prezzo" type="number" />
+    </div>
+
+
+    <div>
+      <label for="mq">Metri quadri</label>
+      <input id="mq" formControlName="mq" type="number" />
+    </div>
+
+    <div>
+      <label for="camere">Camere</label>
+      <input id="camere" formControlName="camere" type="number" />
+    </div>
+
+    <div>
+      <label for="bagni">Bagni</label>
+      <input id="bagni" formControlName="bagni" type="number" />
+    </div>
+
+    <div>
+      <label for="anno">Anno di costruzione</label>
+      <input id="anno" formControlName="anno" type="number" />
+    </div>
+
+
+    <div>
+      <label for="provincia">Provincia</label>
+      <input id="provincia" formControlName="provincia" />
+    </div>
+
+
+    <!-- Sezione per immagini esistenti -->
+    <div *ngIf="immobileDetails.fotoPaths.length > 0" class="immagini-container">
+      <label>Immagini attuali:</label>
+      <div class="immagine-wrapper" *ngFor="let immagine of immobileDetails.fotoPaths; let i = index">
+        <img [src]="getImageSrc(immagine)" alt="Immobile immagine" class="immagine-preview" />
+      </div>
+    </div>
+
+
+    <div class="form-field">
+      <label for="foto">
+        <span class="warning-text">Attenzione: Se si intende modificare le immagini dell'annuncio, bisogna ricaricarle tutte da capo</span>
+      </label>
+      <input id="foto" type="file" (change)="onFileSelected($event)" multiple accept="image/*">
+
+      <!-- Anteprima immagini selezionate -->
+      <div *ngIf="anteprimaImmagini.length > 0" class="preview-images">
+        <div *ngFor="let file of anteprimaImmagini; let i = index" class="preview-container">
+          <img [src]="file" alt="Anteprima immagine" class="preview-img">
+          <button type="button" class="remove-button" (click)="rimuoviFoto(i)">X</button>
+        </div>
+      </div>
+    </div>
+
+
+    <button type="submit">Salva modifiche</button>
+  </form>
+</div>
+
+<footer>
+    <app-footer></app-footer>
+</footer>

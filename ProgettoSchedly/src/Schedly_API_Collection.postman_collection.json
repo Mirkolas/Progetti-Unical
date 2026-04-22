@@ -1,0 +1,489 @@
+{
+	"info": {
+		"_postman_id": "schedly-api-collection",
+		"name": "Schedly API Collection",
+		"description": "Collezione completa per testare tutti i controller dell'API Schedly",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Utenti",
+			"item": [
+				{
+					"name": "Get All Utenti",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{http://localhost:8080}}/api/utenti",
+							"host": ["{{http://localhost:8080}}"],
+							"path": ["api", "utenti"]
+						}
+					}
+				},
+				{
+					"name": "Get Utente By ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{http://localhost:8080}}/api/utenti/1",
+							"host": ["{{http://localhost:8080}}"],
+							"path": ["api", "utenti", "1"]
+						}
+					}
+				},
+				{
+					"name": "Create Utente",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"test_user\",\n    \"email\": \"test@example.com\",\n    \"password\": \"Test123!@#\"\n}"
+						},
+						"url": {
+							"raw": "{{http://localhost:8080}}/api/utenti",
+							"host": ["{{http://localhost:8080}}"],
+							"path": ["api", "utenti"]
+						}
+					}
+				},
+				{
+					"name": "Update Utente",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"test_user_updated\",\n    \"email\": \"test_updated@example.com\",\n    \"password\": \"NewPass123!@#\"\n}"
+						},
+						"url": {
+							"raw": "{{http://localhost:8080}}/api/utenti/1",
+							"host": ["{{http://localhost:8080}}"],
+							"path": ["api", "utenti", "1"]
+						}
+					}
+				},
+				{
+					"name": "Delete Utente",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{http://localhost:8080}}/api/utenti/1",
+							"host": ["{{http://localhost:8080}}"],
+							"path": ["api", "utenti", "1"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Tasks",
+			"item": [
+				{
+					"name": "Get Tasks For User",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{http://localhost:8080}}/api/utenti/1/tasks",
+							"host": ["{{http://localhost:8080}}"],
+							"path": ["api", "utenti", "1", "tasks"]
+						}
+					}
+				},
+				{
+					"name": "Create Task",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"titolo\": \"Nuova Attività\",\n    \"durata\": 60,\n    \"giorno\": \"2024-02-15\",\n    \"fasciaOraria\": \"09:00-10:00\",\n    \"scadenza\": \"2024-02-20\",\n    \"priorita\": \"ALTA\",\n    \"note\": \"Note di esempio\",\n    \"stato\": \"todo\",\n    \"pianoId\": 1\n}"
+						},
+						"url": {
+							"raw": "{{http://localhost:8080}}/api/utenti/1/tasks",
+							"host": ["{{http://localhost:8080}}"],
+							"path": ["api", "utenti", "1", "tasks"]
+						}
+					}
+				},
+				{
+					"name": "Create Tasks Bulk",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n    {\n        \"titolo\": \"Attività 1\",\n        \"durata\": 90,\n        \"giorno\": \"2024-02-16\",\n        \"fasciaOraria\": \"10:00-11:30\",\n        \"priorita\": \"MEDIA\",\n        \"stato\": \"todo\"\n    },\n    {\n        \"titolo\": \"Attività 2\",\n        \"durata\": 120,\n        \"giorno\": \"2024-02-17\",\n        \"fasciaOraria\": \"14:00-16:00\",\n        \"priorita\": \"ALTA\",\n        \"stato\": \"todo\"\n    }\n]"
+						},
+						"url": {
+							"raw": "{{http://localhost:8080}}/api/utenti/1/tasks/bulk",
+							"host": ["{{http://localhost:8080}}"],
+							"path": ["api", "utenti", "1", "tasks", "bulk"]
+						}
+					}
+				},
+				{
+					"name": "Update Task",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"titolo\": \"Attività Aggiornata\",\n    \"durata\": 90,\n    \"giorno\": \"2024-02-18\",\n    \"fasciaOraria\": \"11:00-12:30\",\n    \"scadenza\": \"2024-02-25\",\n    \"priorita\": \"ALTA\",\n    \"note\": \"Note aggiornate\",\n    \"stato\": \"in_progress\",\n    \"pianoId\": 1\n}"
+						},
+						"url": {
+							"raw": "{{http://localhost:8080}}/api/tasks/1",
+							"host": ["{{http://localhost:8080}}"],
+							"path": ["api", "tasks", "1"]
+						}
+					}
+				},
+				{
+					"name": "Delete Task",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{http://localhost:8080}}/api/tasks/1",
+							"host": ["{{http://localhost:8080}}"],
+							"path": ["api", "tasks", "1"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Vincoli",
+			"item": [
+				{
+					"name": "Get Vincoli For User",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{http://localhost:8080}}/api/utenti/1/vincoli",
+							"host": ["{{http://localhost:8080}}"],
+							"path": ["api", "utenti", "1", "vincoli"]
+						}
+					}
+				},
+				{
+					"name": "Create/Update Vincoli",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"fasceOrarieDisponibili\": \"09:00-13:00,14:00-18:00\",\n    \"giorniPreferiti\": \"1,2,3,4,5\",\n    \"limiteCaricoGiornaliero\": 6,\n    \"impostazioniNotifiche\": \"{\\\"email\\\": true, \\\"push\\\": true, \\\"anticipo\\\": 30}\"\n}"
+						},
+						"url": {
+							"raw": "{{http://localhost:8080}}/api/utenti/1/vincoli",
+							"host": ["{{http://localhost:8080}}"],
+							"path": ["api", "utenti", "1", "vincoli"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Piani",
+			"item": [
+				{
+					"name": "Get All Piani",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{http://localhost:8080}}/api/piani",
+							"host": ["{{http://localhost:8080}}"],
+							"path": ["api", "piani"]
+						}
+					}
+				},
+				{
+					"name": "Get Piano By ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{http://localhost:8080}}/api/piani/1",
+							"host": ["{{http://localhost:8080}}"],
+							"path": ["api", "piani", "1"]
+						}
+					}
+				},
+				{
+					"name": "Get Piano For User",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{http://localhost:8080}}/api/utenti/1/piano",
+							"host": ["{{http://localhost:8080}}"],
+							"path": ["api", "utenti", "1", "piano"]
+						}
+					}
+				},
+				{
+					"name": "Create/Update Piano For User",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"periodo\": \"SETTIMANALE\",\n    \"dataCreazione\": \"2024-01-15T10:30:00\",\n    \"dataRigenerazione\": \"2024-01-20T14:22:00\"\n}"
+						},
+						"url": {
+							"raw": "{{http://localhost:8080}}/api/utenti/1/piano",
+							"host": ["{{http://localhost:8080}}"],
+							"path": ["api", "utenti", "1", "piano"]
+						}
+					}
+				},
+				{
+					"name": "Delete Piano",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{http://localhost:8080}}/api/piani/1",
+							"host": ["{{http://localhost:8080}}"],
+							"path": ["api", "piani", "1"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "History",
+			"item": [
+				{
+					"name": "Get History For Piano",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{http://localhost:8080}}/api/piani/1/history",
+							"host": ["{{http://localhost:8080}}"],
+							"path": ["api", "piani", "1", "history"]
+						}
+					}
+				},
+				{
+					"name": "Create History",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"dataArchiviazione\": \"2024-01-20T23:59:59\"\n}"
+						},
+						"url": {
+							"raw": "{{http://localhost:8080}}/api/piani/1/history",
+							"host": ["{{http://localhost:8080}}"],
+							"path": ["api", "piani", "1", "history"]
+						}
+					}
+				},
+				{
+					"name": "Delete History",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{http://localhost:8080}}/api/history/1",
+							"host": ["{{http://localhost:8080}}"],
+							"path": ["api", "history", "1"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Notifiche",
+			"item": [
+				{
+					"name": "Get Notifiche For User",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{http://localhost:8080}}/api/utenti/1/notifiche",
+							"host": ["{{http://localhost:8080}}"],
+							"path": ["api", "utenti", "1", "notifiche"]
+						}
+					}
+				},
+				{
+					"name": "Get Notifiche For Task",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{http://localhost:8080}}/api/tasks/1/notifiche",
+							"host": ["{{http://localhost:8080}}"],
+							"path": ["api", "tasks", "1", "notifiche"]
+						}
+					}
+				},
+				{
+					"name": "Create Notifica",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"tipo\": \"EMAIL\",\n    \"orarioNotifica\": \"08:30:00\",\n    \"attivitaId\": 1,\n    \"utenteId\": 1\n}"
+						},
+						"url": {
+							"raw": "{{http://localhost:8080}}/api/notifiche",
+							"host": ["{{http://localhost:8080}}"],
+							"path": ["api", "notifiche"]
+						}
+					}
+				},
+				{
+					"name": "Update Notifica",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"tipo\": \"PUSH\",\n    \"orarioNotifica\": \"09:00:00\",\n    \"attivitaId\": 1,\n    \"utenteId\": 1\n}"
+						},
+						"url": {
+							"raw": "{{http://localhost:8080}}/api/notifiche/1",
+							"host": ["{{http://localhost:8080}}"],
+							"path": ["api", "notifiche", "1"]
+						}
+					}
+				},
+				{
+					"name": "Delete Notifica",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{http://localhost:8080}}/api/notifiche/1",
+							"host": ["{{http://localhost:8080}}"],
+							"path": ["api", "notifiche", "1"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Esportazioni",
+			"item": [
+				{
+					"name": "Get Esportazioni For Piano",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{http://localhost:8080}}/api/piani/1/esportazioni",
+							"host": ["{{http://localhost:8080}}"],
+							"path": ["api", "piani", "1", "esportazioni"]
+						}
+					}
+				},
+				{
+					"name": "Create Esportazione",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"formato\": \"PDF\",\n    \"dataEsportazione\": \"2024-01-20T15:30:00\"\n}"
+						},
+						"url": {
+							"raw": "{{http://localhost:8080}}/api/piani/1/esportazioni",
+							"host": ["{{http://localhost:8080}}"],
+							"path": ["api", "piani", "1", "esportazioni"]
+						}
+					}
+				},
+				{
+					"name": "Delete Esportazione",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{http://localhost:8080}}/api/esportazioni/1",
+							"host": ["{{http://localhost:8080}}"],
+							"path": ["api", "esportazioni", "1"]
+						}
+					}
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "http://localhost:8080",
+			"value": "http://localhost:8080",
+			"type": "string"
+		}
+	]
+}
+
+
